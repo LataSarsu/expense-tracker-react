@@ -4,18 +4,29 @@ import { GlobalContext } from "../context/GlobalState";
 const AddTransaction = () => {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState(0);
-  const { addTransaction } = useContext(GlobalContext);
-  const onSubmit = e => {
+  //  const { transactionContext } = useContext(GlobalContext);
+  const { transactions, addTransaction } = useContext(GlobalContext);
+  //  const { addTransaction } = useContext(GlobalContext);
+  //const onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    const newTransaction ={
+
+    if (text.trim() === "" || amount === 0) {
+      // Optionally, add validation here
+      return;
+    }
+
+    const newTransaction = {
       id: Math.floor(Math.random() * 100000000),
       text,
-      amount: +amount
-    }
-    addTransaction(newTransaction)
-    setText('')
-    setAmount(0)
-  }
+      amount: +amount, // Convert to number
+    };
+
+    addTransaction(newTransaction); // Call the function to add the transaction
+
+    setText(""); // Clear text input
+    setAmount(0); // Clear amount input
+  };
   return (
     <>
       <h3>Add new transaction</h3>
